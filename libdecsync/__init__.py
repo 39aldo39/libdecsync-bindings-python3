@@ -38,7 +38,7 @@ else:
     raise Exception("libdecsync: Operating system '" + os_name + "' not supported")
 platform_bits = platform.architecture()[0]
 if platform_bits != "64bit":
-    raise Exception("libdecsync: A 64bit platform is required. Found '" + platform_bits "'.")
+    raise Exception("libdecsync: A 64bit platform is required. Found '" + platform_bits + "'.")
 
 _libdecsync = CDLL(libpath)
 
