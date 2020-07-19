@@ -154,9 +154,9 @@ _check_decsync_info_c.argtypes = [c_char_p]
 _check_decsync_info_c.restype = c_int
 _check_decsync_info_c.errcheck = _errcheckDecsync
 
-_list_decsync_collections_c = _libdecsync.decsync_so_list_decsync_collections
-_list_decsync_collections_c.argtypes = [c_char_p, c_char_p, POINTER(c_char_p), c_int]
-_list_decsync_collections_c.restype = c_int
+_list_collections_c = _libdecsync.decsync_so_list_collections
+_list_collections_c.argtypes = [c_char_p, c_char_p, c_char_p, c_int]
+_list_collections_c.restype = c_int
 
 _get_app_id_c = _libdecsync.decsync_so_get_app_id
 _get_app_id_c.argtypes = [c_char_p, c_char_p, c_int]
@@ -503,10 +503,9 @@ class Decsync:
         :rtype: list(str)
 
         """
-        string_buffers = [create_string_buffer(256) for i in range(max_len)]
-        pointers = _c_array(c_char_p, list(map(addressof, string_buffers)))
-        num_collections = _list_decsync_collections_c(decsync_dir.encode(), sync_type.encode(), *pointers)
-        return [string_buffers[i].value.decode() for i in range(num_collections)]
+        collections = create_string_buffer(max_len*256)
+        num_collections = _list_collections_c(decsync_dir.encode(), sync_type.encode(), collections, max_len)
+        return [collections[i*256:(i+1)*256].rstrip(b'\0').decode() for i in range(num_collections)]
 
     @staticmethod
     def get_app_id(app_name, id=None):
