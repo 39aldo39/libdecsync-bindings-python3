@@ -347,7 +347,7 @@ class Decsync:
         :type entries: list(Entry)
 
         """
-        entries_c = _c_array(c_void_p, list(map(Entry.ptr, entries)))
+        entries_c = _c_array(c_void_p, list(map(lambda x: x.ptr, entries)))
         _set_entries_for_path_c(self.ptr, *_c_path(path), *entries_c)
 
     def execute_all_new_entries(self, extra):
@@ -381,7 +381,7 @@ class Decsync:
         :param extra: extra userdata passed to the listener.
 
         """
-        stored_entries_c = _c_array(c_void_p, list(map(StoredEntry.ptr, stored_entries)))
+        stored_entries_c = _c_array(c_void_p, list(map(lambda x: x.ptr, stored_entries)))
         _execute_stored_entries_c(self.ptr, *stored_entries_c, extra)
 
     def execute_stored_entries_for_path_exact(self, path, extra, keys=None):
