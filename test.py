@@ -2,7 +2,7 @@ from libdecsync import Decsync
 import unittest
 import shutil
 
-# Very basic tests, mostly to make sure no crashes occur
+# Very basic tests, mostly to make sure the bindings are correct
 class DecsyncTest(unittest.TestCase):
 
     def test_instance(self):
