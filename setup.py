@@ -4,7 +4,7 @@ from setuptools import setup
 
 setup(
     name="libdecsync",
-    version="1.7.0",
+    version="1.7.1",
     author="Aldo Gunsing",
     author_email="dev@aldogunsing.nl",
     url="https://github.com/39aldo39/libdecsync-bindings-python3",
