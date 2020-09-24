@@ -56,6 +56,10 @@ _decsync_new_c.argtypes = [POINTER(c_void_p), c_char_p, c_char_p, c_char_p, c_ch
 _decsync_new_c.restype = c_int
 _decsync_new_c.errcheck = _errcheckDecsync
 
+_decsync_init_done_c = _libdecsync.decsync_so_init_done
+_decsync_init_done_c.argtypes = [c_void_p]
+_decsync_init_done_c.restype = c_void_p
+
 _decsync_free_c = _libdecsync.decsync_so_free
 _decsync_free_c.argtypes = [c_void_p]
 _decsync_free_c.restype = None
@@ -281,6 +285,15 @@ class Decsync:
         if collection is None:
             collection = ""
         _decsync_new_c(byref(self.ptr), decsync_dir.encode(), sync_type.encode(), collection.encode(), own_app_id.encode())
+
+    def init_done(self):
+        """
+        Marks the DecSync instance as finalized. This function has to be called after adding all the
+        listeners, otherwise the DecSync instance cannot be used from other threads. However, this call
+        only makes it possible to use the instance from other threads, but does not make it safe to have
+        such concurrent calls. For this, it is still necessary to use a mutex for example.
+        """
+        _decsync_init_done_c(self.ptr)
 
     def add_listener(self, subpath, on_entry_update):
         """

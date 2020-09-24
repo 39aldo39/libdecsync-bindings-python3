@@ -11,6 +11,7 @@ class DecsyncTest(unittest.TestCase):
         def listener(path, datetime, key, value, extra):
             extra[(tuple(path), key)] = value
         decsync.add_listener([], listener)
+        decsync.init_done()
 
         decsync.set_entry(["foo1", "bar1"], "key1", "value1 ☺")
         decsync.set_entries([Decsync.EntryWithPath(["foo2", "bar2"], "key2", "value2")])
