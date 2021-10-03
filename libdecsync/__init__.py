@@ -30,15 +30,25 @@ class DecsyncException(Exception):
     pass
 
 os_name = platform.system()
+machine_type = platform.machine()
+platform_bits = platform.architecture()[0]
 if os_name == "Linux":
-    libpath = resource_filename(__name__, "libs/libdecsync.so")
+    if machine_type == "x86_64":
+        libpath = resource_filename(__name__, "libs/libdecsync_amd64.so")
+    elif machine_type.startswith("arm"):
+        if platform_bits == "64bit":
+            libpath = resource_filename(__name__, "libs/libdecsync_arm64.so")
+        else:
+            libpath = resource_filename(__name__, "libs/libdecsync_arm32.so")
+    else:
+        raise Exception("libdecsync: Machine type '" + machine_type + "' not supported")
 elif os_name == "Windows":
-    libpath = resource_filename(__name__, "libs/decsync.dll")
+    if platform_bits == "64bit":
+        libpath = resource_filename(__name__, "libs/decsync_x64.dll")
+    else:
+        libpath = resource_filename(__name__, "libs/decsync_x86.dll")
 else:
     raise Exception("libdecsync: Operating system '" + os_name + "' not supported")
-platform_bits = platform.architecture()[0]
-if platform_bits != "64bit":
-    raise Exception("libdecsync: A 64bit platform is required. Found '" + platform_bits + "'.")
 
 _libdecsync = CDLL(libpath)
 
