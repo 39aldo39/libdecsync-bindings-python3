@@ -47,6 +47,11 @@ elif os_name == "Windows":
         libpath = resource_filename(__name__, "libs/decsync_x64.dll")
     else:
         libpath = resource_filename(__name__, "libs/decsync_x86.dll")
+elif os_name == "Darwin":
+    if machine_type == "x86_64":
+        libpath = resource_filename(__name__, "libs/libdecsync_amd64.dylib")
+    else:
+        libpath = resource_filename(__name__, "libs/libdecsync_arm64.dylib")
 else:
     raise Exception("libdecsync: Operating system '" + os_name + "' not supported")
 

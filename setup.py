@@ -19,6 +19,7 @@ setup(
         "Programming Language :: Python :: 3",
         "Operating System :: POSIX :: Linux",
         "Operating System :: Microsoft :: Windows",
+        "Operating System :: MacOS :: MacOS X",
         "License :: OSI Approved :: GNU Lesser General Public License v2 or later (LGPLv2+)",
         "Intended Audience :: Developers"
     ]
