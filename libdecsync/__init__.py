@@ -35,7 +35,7 @@ platform_bits = platform.architecture()[0]
 if os_name == "Linux":
     if machine_type == "x86_64":
         libpath = resource_filename(__name__, "libs/libdecsync_amd64.so")
-    elif machine_type.startswith("arm"):
+    elif machine_type.startswith("arm") or machine_type.startswith("aarch"):
         if platform_bits == "64bit":
             libpath = resource_filename(__name__, "libs/libdecsync_arm64.so")
         else:
