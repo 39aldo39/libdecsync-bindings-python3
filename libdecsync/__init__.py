@@ -26,6 +26,8 @@ from pkg_resources import resource_filename
 import platform
 import sys
 
+__all__ = ["DecsyncException", "DecSync"]
+
 class DecsyncException(Exception):
     pass
 
